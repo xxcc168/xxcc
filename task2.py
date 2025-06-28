@@ -7,6 +7,7 @@ def is_prime(n):
             return False
     return True
 
+
 # 1. 输出1到100之间的所有素数
 def print_primes():
     print("1-100之间的素数：")
