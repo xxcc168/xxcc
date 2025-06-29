@@ -2,17 +2,17 @@ import os
 import re
 
 def natural_sort_key(s):
-    """实现特定排序规则：数字按自然顺序，但带前导零的数字排在相同值的数字之前"""
+    """实现特定排序规则：数字按自然���序，但带前导零的数字排在相同值的数字之前"""
     def convert(text):
         if text.isdigit():
-            # 对于数字部分，创建一个元组：(数值, 原始字符串长度)
-            # 这样可以保证：相同数值时，更长的数字串（带前导零）排在后面
             num_val = int(text)
-            return (num_val, len(text))
+            # 如果是以0开头的数字，返回一个特殊的元组使其排在普通数字之前
+            if text.startswith('0') and len(text) > 1:
+                return (num_val - 0.5, text)
+            return (num_val, text)
         return text.lower()
 
-    parts = re.split('([0-9]+)', s)
-    return [convert(text) for text in parts]
+    return [convert(p) for p in re.split('([0-9]+)', s)]
 
 def rename_images():
     # 设置文件夹路径
@@ -32,7 +32,19 @@ def rename_images():
         print(f"警告：图片数量({len(image_files)})与名字数量({len(new_names)})不匹配！")
         return
 
-    # 重命名文件
+    # 首先显示排序和重命名预览
+    print("\n=== 文件重命名预览 ===")
+    for i, (old_name, new_name) in enumerate(zip(image_files, new_names), 1):
+        print(f"[{i}] {old_name} -> {new_name}.png")
+
+    # 询问用户是否继续
+    user_input = input("\n请确认排序是否正确？(y/n): ")
+    if user_input.lower() != 'y':
+        print("操作已取消")
+        return
+
+    # 执行实际的重命名操作
+    print("\n=== 开始重命名文件 ===")
     for i, (old_name, new_name) in enumerate(zip(image_files, new_names), 1):
         old_path = os.path.join(folder_path, old_name)
         new_path = os.path.join(folder_path, f"{new_name}.png")
