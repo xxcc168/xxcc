@@ -1,5 +1,6 @@
 from task1_1 import calculate_area, calculate_perimeter
 
+
 def is_palindrome(num):
     """判断一个数是否为回文数"""
     str_num = str(num)
