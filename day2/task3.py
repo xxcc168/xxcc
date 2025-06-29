@@ -2,15 +2,17 @@ import os
 import re
 
 def natural_sort_key(s):
-    """实现Windows自然排序的key函数，保持前导零的排序优先级"""
+    """实现特定排序规则：数字按自然顺序，但带前导零的数字排在相同值的数字之前"""
     def convert(text):
-        # 如果是数字，保持原始字符串形式进行比较
-        # 这样会保持前导零的排序优先级
         if text.isdigit():
-            return text
+            # 对于数字部分，创建一个元组：(数值, 原始字符串长度)
+            # 这样可以保证：相同数值时，更长的数字串（带前导零）排在后面
+            num_val = int(text)
+            return (num_val, len(text))
         return text.lower()
 
-    return [convert(text) for text in re.split('([0-9]+)', s)]
+    parts = re.split('([0-9]+)', s)
+    return [convert(text) for text in parts]
 
 def rename_images():
     # 设置文件夹路径
