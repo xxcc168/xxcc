@@ -193,6 +193,7 @@ def main():
     driver = get_driver()
     results = []
 
+
     for idx, t in enumerate(PAPER_TITLES):
         print(f"[{idx+1}/{len(PAPER_TITLES)}] 搜索: {t}")
 
