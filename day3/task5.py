@@ -3,7 +3,8 @@ import os
 
 def analyze_city_data():
     # 设置数据文件路径
-    data_path = r'D:\Drivers\pydata\PythonProject1\day3\data'
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    data_path = os.path.join(script_dir, 'data')
     files = [
         '2015年国内主要城市年度数据.csv',
         '2016年国内主要城市年度数据.csv',
@@ -40,8 +41,16 @@ def analyze_city_data():
 
     # 保存合并后的数据
     output_path = os.path.join(data_path, '生产总值.csv')
-    merged_df.to_csv(output_path, index=False, encoding='utf-8-sig')
-    print(f"\n合并数据已保存至: {output_path}")
+    try:
+        # 尝试删除已存在的文件(如果有)
+        if os.path.exists(output_path):
+            os.remove(output_path)
+        merged_df.to_csv(output_path, index=False, encoding='utf-8-sig')
+        print(f"\n合并数据已保存至: {output_path}")
+    except PermissionError:
+        print(f"\n错误: 无法写入文件 {output_path}，请检查文件是否被其他程序打开或没有写入权限")
+    except Exception as e:
+        print(f"\n保存文件时发生错误: {str(e)}")
 
     # 5. 计算每个城市GDP年均增长率并找出最高/最低的五个城市
     city_growth = merged_df.pivot(index='地区', columns='年份', values='国内生产总值')
@@ -66,8 +75,16 @@ def analyze_city_data():
     big4_cities = ['北京', '上海', '广州', '深圳']
     big4_data = merged_df[merged_df['地区'].isin(big4_cities)]
     big4_output = os.path.join(data_path, '四大城市数据.csv')
-    big4_data.to_csv(big4_output, index=False, encoding='utf-8-sig')
-    print(f"\n四大城市数据已保存至: {big4_output}")
+    try:
+        # 尝试删除已存在的文件(如果有)
+        if os.path.exists(big4_output):
+            os.remove(big4_output)
+        big4_data.to_csv(big4_output, index=False, encoding='utf-8-sig')
+        print(f"\n四大城市数据已保存至: {big4_output}")
+    except PermissionError:
+        print(f"\n错误: 无法写入文件 {big4_output}，请检查文件是否被其他程序打开或没有写入权限")
+    except Exception as e:
+        print(f"\n保存四大城市数据时发生错误: {str(e)}")
 
 if __name__ == "__main__":
     analyze_city_data()
