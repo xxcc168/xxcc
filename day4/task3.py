@@ -17,6 +17,7 @@ survival_rates.plot(kind='bar')
 plt.title('不同乘客等级的生还率')
 plt.xlabel('乘客等级')
 plt.ylabel('生还率')
+plt.xticks(rotation=45)  # 添加横坐标旋转45度
 
 # 在柱状图上添加具体数值
 for i, rate in enumerate(survival_rates):
@@ -51,6 +52,7 @@ age_stats['生还率'].plot(kind='bar', color='skyblue')
 plt.title('不同年龄组的生还率')
 plt.xlabel('年龄组')
 plt.ylabel('生还率')
+plt.xticks(rotation=45)  # 添加横坐标旋转45度
 
 # 在柱状图上添加具体数值
 for i, rate in enumerate(age_stats['生还率']):
@@ -62,6 +64,7 @@ age_stats['总人数'].plot(kind='bar', color='lightgreen')
 plt.title('不同年龄组的人数分布')
 plt.xlabel('年龄组')
 plt.ylabel('人数')
+plt.xticks(rotation=45)  # 添加横坐标旋转45度
 
 # 在柱状图上添加具体数值
 for i, count in enumerate(age_stats['总人数']):
