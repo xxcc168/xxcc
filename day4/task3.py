@@ -19,6 +19,7 @@ plt.xlabel('乘客等级')
 plt.ylabel('生还率')
 plt.xticks(rotation=45)  # 添加横坐标旋转45度
 
+
 # 在柱状图上添加具体数值
 for i, rate in enumerate(survival_rates):
     plt.text(i, rate, f'{rate:.2%}', ha='center', va='bottom')
